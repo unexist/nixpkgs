@@ -1,8 +1,17 @@
-{ lib, stdenv, fetchhg, libX11, libXinerama, libXft, libXrandr, ruby, .. }:
+{ stdenv, lib, fetchhg, libX11, libXinerama, libXft, libXrandr, ruby }:
 
 stdenv.mkDerivation {
   pname = "subtle";
   version = "0.9999";
+
+  meta = with lib; {
+    description = "A grid-based manual tiling window manager";
+    homepage    = "https://subtle.de";
+    license     = licenses.gpl3;
+    platforms   = platforms.linux;
+    #maintainers = [ maintainers.unexist ];
+  };
+
   src = fetchhg {
     url = "https://hg.unexist.dev/subtle";
     rev = "7881370e398a";
