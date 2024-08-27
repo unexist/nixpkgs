@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchhg, pkg-config, libX11, libXinerama, libXrandr, libXft, ruby }:
+{ stdenv, lib, fetchhg, pkg-config, libX11, libXi, libXinerama, libXrandr, libXft, libXpm, libXtst, xinput, ruby }:
 
 stdenv.mkDerivation {
   pname = "subtle";
@@ -14,28 +14,33 @@ stdenv.mkDerivation {
 
   src = fetchhg {
     url = "https://hg.unexist.dev/subtle";
-    rev = "7881370e398a";
-    sha256 = "03r0hyb74ppczw9a8w3l1g0ipj6zv0gf0hsm9bva7a8znywg8v5q"; # Created with nix-prefetch-hg
+    rev = "864ce3a9bc6b";
+    sha256 = "0085csjvjqzqj673gzj25nfhljynn0pidsr171ga18x6d59br0w5"; # Created with nix-prefetch-hg
   };
 
   system = builtins.currentSystem;
  
   buildInputs = [
     libX11
+    libXi
     libXinerama
     libXrandr
     libXft
+    libXpm
+    libXtst
+    xinput
     ruby
   ];
 
   nativeBuildInputs = [ pkg-config ];
 
-  outputs = [
-    "out"
-    "man"
-  ];
+  outputs = [ "out" ];
 
   buildPhase = ''
-    rake prefix=${placeholder "out"} mandir=${placeholder "man"}
+    rake prefix=${placeholder "out"} sysconfdir=${placeholder "out"}/etc
+  '';
+
+  installPhase = ''
+    rake install
   '';
 }
