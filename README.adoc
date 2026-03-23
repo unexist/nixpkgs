@@ -1,4 +1,3 @@
-nixpkgs
--------
+= nixpkgs
 
 This repository contains my custom made nix packages.
